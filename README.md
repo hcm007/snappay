@@ -1,12 +1,17 @@
 # SnapPay project
 :blush:	 :blush:	 :blush:	 :blush:	
-## You are asked to build an Elasticsearch cluster and Kibana server in cloud to collect logs
 
+## Question_1 You are asked to build an Elasticsearch cluster and Kibana server in cloud to collect logs
 
 ### How to provision the cluster in 30 minutes
 
 #### Prerequistites
-you need to configure the aws command credential
+```
+git clone git@github.com:pires/kubernetes-elasticsearch-cluster.git
+git clone git@github.com:fluent/fluentd-kubernetes-daemonset.git
+```
+
+you need to configure the aws command credentials
 
 ```
 cd eks_terrafrom
@@ -57,6 +62,42 @@ kubectl create -f kibana-svc.yaml
 4. if we have hundreds of application with diff techs, like docker, host, serverless, then I choose Kafka to distribute the logs, and we can make sure the logs can be transfer in real time
 
 Because kafka is a big topic, I don't have time to give you more detail
+
+
+## Question_2 host static website or content
+
+### Prerequistites
+The users need to configure the aws command credentials
+Or repository is not limited to aws cloud, we can add gcp, azure or 阿里爸爸 :blush: with terraform
+
+### the code to create all necessary infrasture for the website
+the following commands to create the s3 bucket and CDN. if you want to use loadbalancer, you can ask the contributor to work for u and he will add more
+ 
+```
+cd s3-webfiles-with-cloudfront
+terraform plan
+terrafrom apply
+```
+
+### the pipeline to deploy files from the git repo to the website
+1. For Source code management, you can use gitlab, bitbucket or github
+2. for CI/CD pipeline tool, can use jenkins(I like it), bamboom 
+3. Create jenkins job which can be triggered by gitlab push or github push
+
+### - be able to rollback to any version deployed in the last 3 month
+1. when you push the code to gitlab or github please create tag to release
+2. Then jenkins job can be passed the variable which is tag or version to do rollback
+3. or if you can use the commit number to ralloback
+
+### - be able to support HTTPS
+1. create certificate for *.snappay.ca
+2. create DNS records in godaddy or route53 like cdn.aws.net cname www.snappay.ca
+2. assgin the certicate to the cdn or loadbalancer
+
+# :sunglasses: 我在原地等你的回复 :sunglasses: #
+
+
+
 
 
 
